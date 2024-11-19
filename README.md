@@ -7,3 +7,6 @@ This repository contains the source code for a simple library sound monitoring d
 - **Dual-Microcontroller Architecture**: One microcontroller handles sound data acquisition, while the other processes and displays the results.
 - **Compact Design**: Optimized for low power and minimal hardware requirements.
 - **Scalable**: Can be adapted for different environments and applications.
+
+  
+![photo_2024-11-18_22-00-12](https://github.com/user-attachments/assets/5fab8e52-5d2c-41fe-8fcc-c1c4ee8d1245)
