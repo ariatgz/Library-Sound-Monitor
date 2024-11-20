@@ -120,69 +120,69 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 		
-		if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13) == GPIO_PIN_SET){
-			toggle[0] = 48;
-			HAL_UART_Transmit(&huart1,toggle,1,10);
-		}else if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13) == GPIO_PIN_RESET){
-			toggle[0] = 49;
-			HAL_UART_Transmit(&huart1,toggle,1,10);
-		}
-		HAL_Delay(200);
+		// if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13) == GPIO_PIN_SET){
+		// 	toggle[0] = 48;
+		// 	HAL_UART_Transmit(&huart1,toggle,1,10);
+		// }else if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13) == GPIO_PIN_RESET){
+		// 	toggle[0] = 49;
+		// 	HAL_UART_Transmit(&huart1,toggle,1,10);
+		// }
+		// HAL_Delay(200);
 			
-		speaker_num = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8);
-		if(speaker_num == GPIO_PIN_SET){
-			toggle[0] = 48;
-			HAL_UART_Transmit(&huart1,toggle,1,10);
+		// speaker_num = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8);
+		// if(speaker_num == GPIO_PIN_SET){
+		// 	toggle[0] = 48;
+		// 	HAL_UART_Transmit(&huart1,toggle,1,10);
 			
-		}else{
-			toggle[0] = 49;
-			HAL_UART_Transmit(&huart1,toggle,1,10);
-		}
-		HAL_Delay(400);
+		// }else{
+		// 	toggle[0] = 49;
+		// 	HAL_UART_Transmit(&huart1,toggle,1,10);
+		// }
+		// HAL_Delay(400);
 		
-		// HAL_ADC_Start(&hadc1);
+		HAL_ADC_Start(&hadc1);
         
-    //     // Poll for ADC conversion complete
-    //     if (HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY) == HAL_OK) {
-    //         // Read the ADC value
-    //         microphone_value = HAL_ADC_GetValue(&hadc1);
+        // Poll for ADC conversion complete
+        if (HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY) == HAL_OK) {
+            // Read the ADC value
+            microphone_value = HAL_ADC_GetValue(&hadc1);
 					
-		// 			snprintf(uart_buffer, sizeof(uart_buffer), "Mic Value: %lu\r\n", microphone_value);
-    //       HAL_UART_Transmit(&huart2, (uint8_t *)uart_buffer, strlen(uart_buffer), HAL_MAX_DELAY);
-    //     }
+					snprintf(uart_buffer, sizeof(uart_buffer), "Mic Value: %lu\r\n", microphone_value);
+          HAL_UART_Transmit(&huart2, (uint8_t *)uart_buffer, strlen(uart_buffer), HAL_MAX_DELAY);
+        }
         
-    //     // Stop ADC Conversion
-    //     HAL_ADC_Stop(&hadc1);
-		// 		HAL_Delay(200); 
+        // Stop ADC Conversion
+        HAL_ADC_Stop(&hadc1);
+				HAL_Delay(200); 
 				
-			// 	for (int i = 0; i < NUM_SAMPLES; i++) {
-      //       HAL_ADC_Start(&hadc1);
-      //       if (HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY) == HAL_OK) {
-      //           adc_samples[i] = HAL_ADC_GetValue(&hadc1);
-      //       }
-      //       HAL_ADC_Stop(&hadc1);
-      //   }
+				for (int i = 0; i < NUM_SAMPLES; i++) {
+            HAL_ADC_Start(&hadc1);
+            if (HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY) == HAL_OK) {
+                adc_samples[i] = HAL_ADC_GetValue(&hadc1);
+            }
+            HAL_ADC_Stop(&hadc1);
+        }
 
-      //   // Calculate RMS value
-      //   rms_value = calculate_rms(adc_samples, NUM_SAMPLES);
+        // Calculate RMS value
+        rms_value = calculate_rms(adc_samples, NUM_SAMPLES);
 				
-			// 	if(rms_value < 3){
+				if(rms_value < 3){
 				
-			// 		toggle[0] = 49;
-			// 		HAL_UART_Transmit(&huart1,toggle,1,10);
-			// 	}else if ( rms_value< 11){
-			// 		toggle[0] = 48;
-			// 		HAL_UART_Transmit(&huart1,toggle,1,10);}
-			// 	else{
-			// 		toggle[0] = 50;
-			// 		HAL_UART_Transmit(&huart1,toggle,1,10);
-			// 	}
+					toggle[0] = 49;
+					HAL_UART_Transmit(&huart1,toggle,1,10);
+				}else if ( rms_value< 11){
+					toggle[0] = 48;
+					HAL_UART_Transmit(&huart1,toggle,1,10);}
+				else{
+					toggle[0] = 50;
+					HAL_UART_Transmit(&huart1,toggle,1,10);
+				}
 					
 			
 
         
-			// snprintf(uart_buffer, sizeof(uart_buffer), "RMS Value: %.2f\r\n", rms_value);
-      //  HAL_UART_Transmit(&huart2, (uint8_t *)uart_buffer, strlen(uart_buffer), HAL_MAX_DELAY);
+			snprintf(uart_buffer, sizeof(uart_buffer), "RMS Value: %.2f\r\n", rms_value);
+       HAL_UART_Transmit(&huart2, (uint8_t *)uart_buffer, strlen(uart_buffer), HAL_MAX_DELAY);
 
         HAL_Delay(200);  // Adjust to control update frequency
 				
@@ -391,24 +391,24 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-float calculate_rms(uint32_t *samples, uint32_t num_samples) {
-    float sum = 0;
-    float average = 0;
+// float calculate_rms(uint32_t *samples, uint32_t num_samples) {
+//     float sum = 0;
+//     float average = 0;
 
-    // Calculate the average (DC offset)
-    for (int i = 0; i < num_samples; i++) {
-        average += samples[i];
-    }
-    average /= num_samples;
+//     // Calculate the average (DC offset)
+//     for (int i = 0; i < num_samples; i++) {
+//         average += samples[i];
+//     }
+//     average /= num_samples;
 
-    // Calculate the RMS value
-    for (int i = 0; i < num_samples; i++) {
-        float centered_value = samples[i] - average;  // Remove DC offset
-        sum += centered_value * centered_value;
-    }
+//     // Calculate the RMS value
+//     for (int i = 0; i < num_samples; i++) {
+//         float centered_value = samples[i] - average;  // Remove DC offset
+//         sum += centered_value * centered_value;
+//     }
 
-    return sqrtf(sum / num_samples);  // RMS calculation
-}
+//     return sqrtf(sum / num_samples);  // RMS calculation
+// }
 
 
 /* USER CODE END 4 */
