@@ -127,9 +127,9 @@ int main(void)
 			toggle[0] = 49;
 			HAL_UART_Transmit(&huart1,toggle,1,10);
 		}
-		HAL_Delay(200);*/
+		HAL_Delay(200);
 			
-		/*speaker_num = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8);
+		speaker_num = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8);
 		if(speaker_num == GPIO_PIN_SET){
 			toggle[0] = 48;
 			HAL_UART_Transmit(&huart1,toggle,1,10);
